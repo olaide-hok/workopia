@@ -1,0 +1,16 @@
+{
+    "name": "olaide-hok/workopia",
+    "description": "Job listing application",
+    "authors": [
+        {
+            "name": "Habeeb Kareem",
+            "email": "olaidekareem43@yahoo.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Framework\\": "Framework/",
+            "App\\": "App/"
+        }
+    }
+}
