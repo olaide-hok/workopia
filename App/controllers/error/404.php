@@ -1,3 +1,0 @@
-<?=
-
-loadView('error/404');
