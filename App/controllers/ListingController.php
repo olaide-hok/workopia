@@ -125,6 +125,8 @@ class ListingController
 
             $this->db->query($query, $newListingData);
 
+            Session::setFlashMessage('success_message', 'Listing created successfully');
+
             redirect('/listings');
         }
     }
@@ -160,7 +162,7 @@ class ListingController
         $this->db->query('DELETE FROM listings WHERE id = :id', $params);
 
         // Set flash message
-        $_SESSION['success_message'] = 'Listing deleted successfully';
+        Session::setFlashMessage('success_message', 'Listing deleted successfully');
 
         redirect('/listings');
     }
@@ -185,6 +187,12 @@ class ListingController
         if (!$listing) {
             ErrorController::notFound('Listing not found');
             return;
+        }
+
+        // Authorization
+        if (!Authorization::isOwner($listing->user_id)) {
+            Session::setFlashMessage('error_message', 'You are not authoirzed to update this listing');
+            return redirect('/listings/' . $listing->id);
         }
 
         loadView('listings/edit', [
@@ -212,6 +220,12 @@ class ListingController
         if (!$listing) {
             ErrorController::notFound('Listing not found');
             return;
+        }
+
+        // Authorization
+        if (!Authorization::isOwner($listing->user_id)) {
+            Session::setFlashMessage('error_message', 'You are not authoirzed to update this listing');
+            return redirect('/listings/' . $listing->id);
         }
 
         $allowedFields = ['title', 'description', 'salary', 'tags', 'company', 'address', 'city', 'state', 'phone', 'email', 'requirements', 'benefits'];
@@ -252,6 +266,9 @@ class ListingController
 
             $updateValues['id'] = $id;
             $this->db->query($updateQuery, $updateValues);
+
+            // Set flash message
+            Session::setFlashMessage('success_message', 'Listing updated');
 
             redirect('/listings/' . $id);
         }
