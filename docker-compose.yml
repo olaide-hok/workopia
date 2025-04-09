@@ -1,0 +1,26 @@
+services:
+    app:
+        build: .
+        container_name: workopia-app
+        ports:
+            - '8080:80'
+        volumes:
+            - .:/var/www/html
+        depends_on:
+            - db
+
+    db:
+        image: mysql:8.4
+        container_name: workopia-db
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpassword
+            MYSQL_DATABASE: workopia
+            MYSQL_USER: workopia_user
+            MYSQL_PASSWORD: workopia_pass
+        volumes:
+            - db_data:/var/lib/mysql
+            - ./workopia.sql:/docker-entrypoint-initdb.d/workopia.sql
+
+volumes:
+    db_data:
