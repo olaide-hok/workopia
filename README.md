@@ -8,8 +8,8 @@ It includes a custom Laravel-like router, controller classes, views, a database 
 
 ### Requirements
 
--   PHP 7.4 or higher
--   MySQL 5.7 or higher
+-   PHP 8.3 or higher
+-   MySQL 8.4 or higher
 
 ### Installation
 
